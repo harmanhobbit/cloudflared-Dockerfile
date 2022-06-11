@@ -27,6 +27,6 @@ jobs:
       - name: Build and Push image
         run: |
           echo $version
-          for n in "${!domains[@]}" ; do echo "${domains[$n]}" ; done
+          for n in "${!domains[@]}" ; do echo "${domains[$n]} test" ; done
           
           

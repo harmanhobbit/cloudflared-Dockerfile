@@ -1,0 +1,41 @@
+name: Build and Push to GH
+
+on:
+  push:
+    branches: [ "main" ]
+    
+env:
+  IMAGE_NAME: cloudflaredian
+  
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Assign var to ENV
+        run: |
+          cat ./buildvars >> $GITHUB_ENV
+          
+      - name: Build image
+        run: |
+          docker build --no-cache --build-arg CLOUDFLARED_VERSION=$version --build-arg DOMAIN=$domain -t $IMAGE_NAME:$version-$domain .
+          
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        
+      - name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          echo IMAGE_ID=$IMAGE_ID
+          echo version=$version
+          
+          echo $IMAGE_ID
+          echo $VERSION
+          docker tag $IMAGE_NAME:$version-$domain $IMAGE_ID:$version
+          docker push $IMAGE_ID:$VERSION

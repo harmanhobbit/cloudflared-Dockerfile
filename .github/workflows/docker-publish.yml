@@ -26,6 +26,6 @@ jobs:
         
       - name: Build and Push image
         run: >
-          for n in "${!domains[@]}" ; do echo ${domains[$n]} ; done
+          for n in "${!domains[@]}" ; do echo "${domains[$n]}" ; done
           
           

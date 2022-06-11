@@ -24,7 +24,7 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         
-      - name: Buil and Push image
+      - name: Build and Push image
         run: |
           for n in "${!domains[@]}" \
           do \
@@ -33,7 +33,8 @@ jobs:
             IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME  \
             IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]') \ 
             \
-            echo IMAGE_ID=$IMAGE_ID ; echo version=$version \ 
+            echo IMAGE_ID=$IMAGE_ID \
+            echo version=$version \ 
             \
             docker tag $IMAGE_NAME:$version-$domains[$n] $IMAGE_ID:$version \
             docker push $IMAGE_ID:$version-$domains[$n] \

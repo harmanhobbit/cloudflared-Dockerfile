@@ -27,6 +27,6 @@ jobs:
       - name: Build and Push image
         run: |
           echo $version
-          source ./buildvars ; for n in "${!domains[@]}" ; do docker build --no-cache --build-arg CLOUDFLARED_VERSION=$version --build-arg DOMAIN=${domains[$n]} -t $IMAGE_NAME:$version-${domains[$n]} . ; IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME ; IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]') ; echo IMAGE_ID=$IMAGE_ID ; echo version=$version ; docker tag $IMAGE_NAME:$version-${domains[$n]} $IMAGE_ID:$version-${domains[n]} ; docker push $IMAGE_ID:$version-${domains[$n]} ; done
+          source ./buildvars ; for n in "${!domains[@]}" ; do docker build --no-cache --build-arg CLOUDFLARED_VERSION=$version --build-arg DOMAIN=${domains[$n]} -t $IMAGE_NAME-${domains[$n]}:$version . ; IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME ; IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]') ; echo IMAGE_ID=$IMAGE_ID ; echo version=$version ; docker tag $IMAGE_NAME-${domains[$n]}:$version $IMAGE_ID-${domains[n]}:$version ; docker push $IMAGE_ID-${domains[$n]}:$version ; done
           
           

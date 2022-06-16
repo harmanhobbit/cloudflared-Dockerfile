@@ -1,6 +1,9 @@
 echo $version
 source ./buildvars 
-IMAGE_ID=ghcr.io/${ github.repository_owner }/$IMAGE_NAME 
+
+echo ${{ github.repository_owner }}
+
+IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME 
 IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]') 
 
 echo $IMAGE_ID

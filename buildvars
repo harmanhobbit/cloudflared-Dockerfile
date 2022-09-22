@@ -1,5 +1,5 @@
-version=2022.9.0
-date=2022-09-07
+version=2022.9.1
+date=2022-09-22
 IMAGE_NAME=cloudflaredian
 domains[1]=harmanhobbit.online
 domains[2]=allaway.tech
